@@ -87,6 +87,7 @@ public class FTPUtil {
                                 ftpFolder + "/" + file.getName());
                     }
                 }
+                outputStream.close();
             }
             // Disconnect from the SERVER
             close();
