@@ -28,8 +28,14 @@ public class LoggerMain {
                 boolean ok = FTPUtil.uploadSingleFile(backupFile, "/wrlc_scf/" + backupFile);
                 logger.info("LoggerJob ended - " + ok);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                String file = "logs//application.log";
+                boolean ok = false;
+                try {
+                    ok = FTPUtil.uploadSingleFile(file, "/wrlc_scf/" + file);
+                } catch (Exception e1) {
+                    logger.info("LoggerJob ended - " + "no backup log file copied log file- " + ok);
+                }
+
             }
         }
 

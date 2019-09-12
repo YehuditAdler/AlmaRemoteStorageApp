@@ -2,6 +2,7 @@ package com.exlibris.scheduler;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.repeatHourlyForever;
+import static org.quartz.SimpleScheduleBuilder.repeatMinutelyForever;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 import java.util.TimeZone;
@@ -17,6 +18,7 @@ import com.exlibris.items.ItemsMain.ItemJob;
 import com.exlibris.logger.LoggerMain.LoggerJob;
 import com.exlibris.request.RequestsMain.RequestRunJob;
 import com.exlibris.request.RequestsMain.RequestSendToSCF;
+import com.exlibris.test.TestMain.TestJob;
 
 public class SchedulerMain {
 
@@ -33,6 +35,7 @@ public class SchedulerMain {
         JobDetail jobRequestRunJobDetail = newJob(RequestRunJob.class).build();
         JobDetail jobItemJobDetail = newJob(ItemJob.class).build();
         JobDetail jobLoggerJobDetail = newJob(LoggerJob.class).build();
+        JobDetail jobTestDetail = newJob(TestJob.class).build();
 
         // wait 1 hour
         Trigger triggerItemJo = newTrigger().startNow().withSchedule(repeatHourlyForever(1)).build();
@@ -52,11 +55,14 @@ public class SchedulerMain {
                 CronScheduleBuilder.cronSchedule("00 10 * * * ?").inTimeZone(TimeZone.getTimeZone("Etc/UTC")))
                 .startNow().build();
 
+        // wait 1 hour
+        Trigger triggerTestJob = newTrigger().startNow().withSchedule(repeatMinutelyForever(5)).build();
 
         scheduler.scheduleJob(jobRequestSendToSCFDetail, triggerRequestSendToSCF);
         scheduler.scheduleJob(jobRequestRunJobDetail, triggerRequestRunJob);
         scheduler.scheduleJob(jobItemJobDetail, triggerItemJo);
         scheduler.scheduleJob(jobLoggerJobDetail, triggerLoggerJob);
+        scheduler.scheduleJob(jobTestDetail, triggerTestJob);
     }
 
 }
