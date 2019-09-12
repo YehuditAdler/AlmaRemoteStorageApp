@@ -1,0 +1,15 @@
+com\exlibris\restapis\ItemApi.class
+com\exlibris\webhook\handlers\WebhookRequestHandler$1.class
+com\exlibris\webhook\enums\WebhookEvent.class
+com\exlibris\items\SchedulerMain.class
+com\exlibris\restapis\BibApi.class
+com\exlibris\restapis\HttpResponse.class
+com\exlibris\restapis\AlmaRestUtil.class
+com\exlibris\webhook\handlers\WebhookRequestHandler.class
+com\exlibris\webhook\ManageWebHookMessages$1.class
+com\exlibris\items\SchedulerMain$HelloJob.class
+com\exlibris\util\ConfigurationHandler.class
+com\exlibris\servlet\LoggerServlet.class
+com\exlibris\webhook\enums\WebhooksActionType.class
+com\exlibris\servlet\MainServlet.class
+com\exlibris\webhook\ManageWebHookMessages.class
