@@ -42,12 +42,12 @@ Change so that the items will stay in place after request, change everything to 
 WAKE UP HEROKU
 Free dynos are unique because they go to sleep after 30 minutes of inactivity.
 What we can do is run a Bash Shell Script on Windows to Prevent Your Heroku App From Sleeping:
-{code}
+```
 @echo OFF
 :REPEAT
 @echo. %date% at %time% >>PingLogs.txt
 curl  “heroku remote url“
 timeout /t 1800 /nobreak > NUL
 goto REPEAT
-{code}
+```
 
