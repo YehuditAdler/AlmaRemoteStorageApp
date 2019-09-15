@@ -1,0 +1,49 @@
+{
+	"gateway": "https://api-na.hosted.exlibrisgroup.com",
+	"remote_storage_inst": "01AAA_RS",
+	"remote_storage_apikey": "l8xx...",
+	"ftp_server": {
+					"host": "ftp.server",
+					"user": "user",
+					"password": "xxx",
+					"main_folder":"main_rs"
+				},
+	"remote_storage_holding_library":"RS",
+	"remote_storage_holding_location":"rs_sherd",
+	"institutions": [
+		{
+			"code": "01AAA_RS",
+			"apikey": "l8x...",
+			"libraries": [
+				{
+					"code": "RS",
+					"remote_storage_location": ["AAA RS","rs_sherd"]
+				}
+			]
+		},
+		{
+			"code": "01AAA_AB",
+			"apikey": "l8xx...",
+			"requests_job_id":"S123456789",
+			"libraries": [
+				{
+					"code": "ABRS",
+					"circ_desc": "DEFAULT_CIRC_DESK",
+					"remote_storage_location": ["rs_sherd"]
+				}
+			]
+		},
+		{
+			"code": "01AAA_CD",
+			"apikey": "l8xx...",
+			"requests_job_id":"S987654321",
+			"libraries": [
+				{
+					"code": "CDRS",
+					"circ_desc": "DEFAULT_CIRC_DESK",
+					"remote_storage_location": ["AAA RS","AAA CAT","rs_sherd"]
+				}
+			]
+		}
+	]
+}
