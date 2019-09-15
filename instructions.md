@@ -24,8 +24,17 @@ Change so that the items will stay in place after request, change everything to 
 
 ## Installation
 
-1. Clone this repository: `git clone https://github.com/YehuditAdler/AlmaRemoteStorageApp.git`
-2. Install dependencies: `bundle install`
-3. Copy the `application.example.yml` file to `application.yml` and replace the placeholder values.
-4. Run the rake task to populate the index: `rake oai_harvest`
-5. Run the application: `bin\rails server` for WEBrick 
+1. Install [git](https://git-scm.com/downloads).
+2. Install [Heroku](https://devcenter.heroku.com/articles/getting-started-with-java#set-up).
+3. Clone this repository: `git clone https://github.com/YehuditAdler/AlmaRemoteStorageApp.git`
+4. Go to repository folder `cd AlmaRemoteStorageApp`
+5. Remove .git folder
+6. Move the `conf.json` file to FTP under main-folder and replace the institutions values :gateway url , api keys, ftp server detailed...
+7. Commit to Git: `git init` , `git add .` , `git commit -m "Ready to deploy"`
+8. Create the heroku app `heroku create “app-name“`
+9. Add conf.json path to the [Config Vars](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard) when Key=CONFIG_FILE and Value=ftp://user:password@server/path/to/conf.json
+9. Deploy your code `git push heroku master`
+10. The application is now deployed. Ensure that at least one instance of the app is running: `heroku ps:scale web=1`
+11. Congratulations! Your web app should now be up and running on Heroku. Open it in your browser with: `heroku open`
+12. Now you have the remote url in browser - add it to Webhook listener URL
+
