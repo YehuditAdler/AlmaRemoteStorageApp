@@ -25,6 +25,7 @@
 			"code": "01AAA_AB",
 			"apikey": "l8xx...",
 			"requests_job_id":"S123456789",
+			"publishing_job_id":"S987654321",
 			"libraries": [
 				{
 					"code": "ABRS",
@@ -37,6 +38,7 @@
 			"code": "01AAA_CD",
 			"apikey": "l8xx...",
 			"requests_job_id":"S987654321",
+			"publishing_job_id":"S123456789",
 			"libraries": [
 				{
 					"code": "CDRS",
