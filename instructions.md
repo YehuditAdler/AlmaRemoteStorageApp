@@ -1,17 +1,19 @@
 # Instructions
-## Setup
-Before installation please make sure you have a FTP server and API keys.
+## Prerequisites
+FTP server - with sub-directories for each institution
+Access to the Developer network for all member institutions
 
 ### On all Institutions:
-1. FTP connection - To share files between app and alma institutions when [sub-directory](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/050Administration/050Configuring_General_Alma_Functions/050External_Systems#UpdateSubmissionFormatFtp) would be the main folder for all institutions.
-2. Publishing Profile - To handle items synchronization
-    - create a [set](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/050Administration/070Managing_Jobs/060Managing_Search_Queries_and_Sets#sets.setDetail) how contains all items that are located in the remote storage institution.
-    - Create a [publish profile job](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/090Integrations_with_External_Systems/030Resource_Management/080Publishing_and_Inventory_Enrichment) item level with above set. publishing protocol should be FTP and sub-directory is the "ins_code"/items for example : 01AAA_ABC/items. Compressed file extension : tar.gz
-3. Remote Storage Facility - To export all requests to remote storage
-    - Create a [integration profile](https://developers.exlibrisgroup.com/alma/integrations/remote_storage/xml_based/)  of “remote storage” type. when “Export File Path“ is "ins_code"/requests for example : 01AAA_ABC/requests.
+1. FTP connection configuration - To share files between the App and Alma with a  [sub-directory](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/050Administration/050Configuring_General_Alma_Functions/050External_Systems#UpdateSubmissionFormatFtp) for each institutions (the dir name should include the inst code. e.g. main_folder/01AAA_ABC).
+2. API-key with r/w permission for the Bibs area
+3. Publishing Profile - To handle items synchronization
+    - Create a [set](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/050Administration/070Managing_Jobs/060Managing_Search_Queries_and_Sets#sets.setDetail) which contains all items that are located in the remote storage location.
+    - Create an Items [publishing profile job](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/090Integrations_with_External_Systems/030Resource_Management/080Publishing_and_Inventory_Enrichment) with the above set. Publishing protocol should be FTP and sub-directory is "items". Compressed file extension: tar.gz
+4. Remote Storage Facility - To export all requests to remote storage
+    - Create a [integration profile](https://developers.exlibrisgroup.com/alma/integrations/remote_storage/xml_based/)  of “remote storage” type. “Export File Path“ is "requests".
     - Create a [Remote Storage](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/030Fulfillment/080Configuring_Fulfillment/040Configuring_Remote_Storage_Facilities) conected to your integration profile.
     - Edit [Physical Location](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/030Fulfillment/080Configuring_Fulfillment/030Configuring_Physical_Locations) - Type is : Remote Storage , Remote Storage is the remote storage facility you created.
-    - Find the job ID that should be used for submitting the job. will use it in the app configuration: GET :/almaws/v1/conf/jobs?type=SCHEDULED&limit=100 search for integration profile name and get the id this is the requests job id.
+    - Find the job ID that should be used for submitting the job and add it to the app configuration. You can use this API: /almaws/v1/conf/jobs?type=SCHEDULED&limit=100 search for the integration profile name and get the id.
     
 ### On Remote Storage Institution:
 1. Create patrons for each Institution_Lirary or example if Institution code is 01AAA_ABC and libraries code is RS the users Primary identifier will be 01AAA_ABC_RS
