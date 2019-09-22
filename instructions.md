@@ -14,12 +14,14 @@ Access to the Developer network for all member institutions
     - Create a [Remote Storage](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/030Fulfillment/080Configuring_Fulfillment/040Configuring_Remote_Storage_Facilities) conected to your integration profile.
     - Edit [Physical Location](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/030Fulfillment/080Configuring_Fulfillment/030Configuring_Physical_Locations) - Type is : Remote Storage , Remote Storage is the remote storage facility you created.
     - Find the job ID that should be used for submitting the job and add it to the app configuration. You can use this API: /almaws/v1/conf/jobs?type=SCHEDULED&limit=100 search for the integration profile name and get the id.
-    
+5.  [Webhooks](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/090Integrations_with_External_Systems/030Resource_Management/300Webhooks)
+    - Create a Webhooks Integration Profile. Message type is JSON and Under Subscriptions Select `Job Finish` to send a webhook when a Job is finished. Webhook listener URL will be the url after deploying the app with a following Forward Slash and webhook: $url/webhook.
 ### On Remote Storage Institution:
 1. Create patrons for each Institution_Lirary or example if Institution code is 01AAA_ABC and libraries code is RS the users Primary identifier will be 01AAA_ABC_RS
 2. Create [provenance code](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/040Resource_Management/080Configuring_Resource_Management/080Configuring_Provenance_Codes) for each institution code.
 3. add personal delivery for items [terms of use](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/030Fulfillment/080Configuring_Fulfillment/050Physical_Fulfillment#fulfillment.tou.termsOfUseManagement)
 4. Create a [Webhooks](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/090Integrations_with_External_Systems/030Resource_Management/300Webhooks) Integration Profile. Message type is JSON and Under Subscriptions Select Loans to send a webhook when a loan is returned. Webhook listener URL will be the url after deploying the app with a following Forward Slash and webhook: $url/webhook.
+
 
 
 ## Installation
