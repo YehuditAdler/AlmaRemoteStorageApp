@@ -17,7 +17,7 @@ Access to the Developer network for all member institutions
     
 ### On Remote Storage Institution:
 1. Create patrons for each Institution_Lirary or example if Institution code is 01AAA_ABC and libraries code is RS the users Primary identifier will be 01AAA_ABC_RS
-2. Create [rovenance code](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/040Resource_Management/080Configuring_Resource_Management/080Configuring_Provenance_Codes) for each institution code.
+2. Create [provenance code](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/040Resource_Management/080Configuring_Resource_Management/080Configuring_Provenance_Codes) for each institution code.
 3. add personal delivery for items [terms of use](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/030Fulfillment/080Configuring_Fulfillment/050Physical_Fulfillment#fulfillment.tou.termsOfUseManagement)
 4. Create a [Webhooks](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/090Integrations_with_External_Systems/030Resource_Management/300Webhooks) Integration Profile. Message type is JSON and Under Subscriptions Select Loans to send a webhook when a loan is returned. Webhook listener URL will be the url after deploying the app with a following Forward Slash and webhook: $url/webhook.
 
