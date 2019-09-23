@@ -25,18 +25,23 @@ public class LoggerMain {
                 String backupFile = "logs//application.log_" + new SimpleDateFormat("yyyy-MM-dd")
                         .format(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000))
                         + ".log";
+                logger.info("backup File is - " + backupFile);
                 boolean ok = FTPUtil.uploadSingleFile(backupFile, "/wrlc_scf/" + backupFile);
                 logger.info("LoggerJob ended - " + ok);
             } catch (Exception e) {
+                logger.info(e.getMessage());
                 String file = "logs//application.log";
                 boolean ok = false;
                 try {
+                    logger.info("backup File is - " + file);
                     ok = FTPUtil.uploadSingleFile(file, "/wrlc_scf/" + file);
                 } catch (Exception e1) {
+                    logger.info(e1.getMessage());
                     logger.info("LoggerJob ended - " + "no backup log file copied log file- " + ok);
                 }
 
             }
+            logger.info("LoggerJob ended");
         }
 
     }
