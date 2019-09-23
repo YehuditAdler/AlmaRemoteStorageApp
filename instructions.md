@@ -2,7 +2,7 @@
 ## Prerequisites
 FTP server - with sub-directories for each institution.
 
-Access to the Developer network for all member institutions.
+Access to the Developer network for all member institutions, including the remote-storage institutions.
 
 ### On all Institutions:
 1. FTP connection configuration - To share files between the App and Alma with a  [sub-directory](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/050Administration/050Configuring_General_Alma_Functions/050External_Systems#UpdateSubmissionFormatFtp) for each institutions (the dir name should include the inst code. e.g. main_folder/01AAA_ABC).
@@ -16,41 +16,43 @@ Access to the Developer network for all member institutions.
     - Edit [Physical Location](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/030Fulfillment/080Configuring_Fulfillment/030Configuring_Physical_Locations) - Type is : Remote Storage , Remote Storage is the remote storage facility you created.
     - Find the job ID that should be used for submitting the job and add it to the app configuration. You can use this API: /almaws/v1/conf/jobs?type=SCHEDULED&limit=100 search for the integration profile name and get the id.
 5.  [Webhooks](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/090Integrations_with_External_Systems/030Resource_Management/300Webhooks)
-    - Create a Webhooks Integration Profile. Message type is JSON and Under Subscriptions Select `Job Finish` to send a webhook when a Job is finished. Webhook listener URL will be the url after deploying the app with a following Forward Slash and webhook: $url/webhook.
+    - Create a Webhooks Integration Profile. Message type should be JSON and under Subscriptions Select `Job Finish` to send a webhook when an Alma Job is done. Webhook listener URL should be the base-url of the App with a forward slash and "webhook".  $url/webhook.
 ### On Remote Storage Institution:
 1. Create patrons for each Institution_Lirary or example if Institution code is 01AAA_ABC and libraries code is RS the users Primary identifier will be 01AAA_ABC_RS
 2. Create [provenance code](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/040Resource_Management/080Configuring_Resource_Management/080Configuring_Provenance_Codes) for each institution code.
 3. add personal delivery for items [terms of use](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/030Fulfillment/080Configuring_Fulfillment/050Physical_Fulfillment#fulfillment.tou.termsOfUseManagement)
-4. Create a [Webhooks](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/090Integrations_with_External_Systems/030Resource_Management/300Webhooks) Integration Profile. Message type is JSON and Under Subscriptions Select Loans to send a webhook when a loan is returned. Webhook listener URL will be the url after deploying the app with a following Forward Slash and webhook: $url/webhook.
-
+4. Create a [Webhooks](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/090Integrations_with_External_Systems/030Resource_Management/300Webhooks) Integration Profile. Message type is JSON and Under Subscriptions Select Loans to send a webhook when a loan is returned. Webhook listener URL will be the url after deploying the app with a following Forward Slash and "webhook". E.g.:  https://alma-remote-storage-app.herokuapp.com/webhook.
 
 
 ## Installation
 
 1. Install [git](https://git-scm.com/downloads).
 2. Install [Heroku](https://devcenter.heroku.com/articles/getting-started-with-java#set-up).
-3. Clone this repository: `git clone https://github.com/YehuditAdler/AlmaRemoteStorageApp.git`
-4. Go to repository folder `cd AlmaRemoteStorageApp`
+3. Clone this repository: `git clone https://github.com/ExLibrisGroup/AlmaRemoteStorageApp.git`
+4. Go to the repository folder `cd AlmaRemoteStorageApp`
 5. Remove .git folder
-6. Move the `conf.json` file to FTP under main-folder and replace the institutions values :gateway url , api keys, ftp server detailed , requests job id....
+6. The file conf.json should include confidential information, so we'll not upload it to Heroku. Move `conf.json` out to the FTP server, under main-folder and update the relevant values: Gateway url, API-keys etc.
 7. Commit to Git: `git init` , `git add .` , `git commit -m "Ready to deploy"`
-8. Create the heroku app `heroku create “app-name“`
+8. Create the heroku app `heroku create “<app-name>“`
 9. Add conf.json path to the [Config Vars](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard) when Key=CONFIG_FILE and Value=ftp://user:password@server/path/to/conf.json
-9. Deploy your code `git push heroku master`
-10. The application is now deployed. Ensure that at least one instance of the app is running: `heroku ps:scale web=1`
-11. Congratulations! Your web app should now be up and running on Heroku. Open it in your browser with: `heroku open`
-12. Now you have the remote url in browser - add it to Webhook listener URL
+10. Deploy your code `git push heroku master`. The application is now deployed. Ensure that at least one instance of the app is running: `heroku ps:scale web=1`
+11. Congratulations! Your web app should now be up and running on Heroku. If you like to test it from your browser, open it with: `heroku open`
+12. The URL that now opened in your browser is the URL you need to configre in the Webhook integration profile.
+13. When configuring the Webhook profile, press on "Activate". This will call the "challenge" URL: https://<alma-remote-storage-app>.herokuapp.com/webhook?challenge=123
 
-### WAKE UP HEROKU
-Free dynos are unique because they go to sleep after 30 minutes of inactivity.
-What we can do is run a Bash Shell Script on Windows to Prevent Your Heroku App From Sleeping:
+## Maintaining historic log files
+Heroku doesn't keep log files above 1500 lines. For troublshooting we added support for uploading log files to the FTP.
+It is done by a job scheduled in Heroku. However since we use a free account in Heroku, scheduled jobs are not guaranteed to run.
+Free dynos "sleep" after 30 minutes of inactivity. They can be waken up by calling our App URL every few minutes.
+The below script can be run from any Windows PC to prevent your Heroku App from sleeping:
+See others tricks [here](https://quickleft.com/blog/6-easy-ways-to-prevent-your-heroku-node-app-from-sleeping/)
 
-- RepeatPing.bat file :
+- RepeatCurl.bat file :
 ```
 @echo OFF
 :REPEAT
-@echo. %date% at %time% >>PingLogs.txt
-curl  “heroku remote url“
+@echo. %date% at %time% >>CurlLogs.txt
+curl  “https://<alma-remote-storage-app>.herokuapp.com“
 timeout /t 1800 /nobreak > NUL
 goto REPEAT
 ```
