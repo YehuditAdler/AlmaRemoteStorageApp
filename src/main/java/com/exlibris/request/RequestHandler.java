@@ -1,15 +1,10 @@
 package com.exlibris.request;
 
-import javax.net.ssl.HttpsURLConnection;
-
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.exlibris.items.ItemData;
-import com.exlibris.restapis.HttpResponse;
-import com.exlibris.restapis.JobApi;
-import com.exlibris.util.ConfigurationHandler;
 import com.exlibris.util.SCFUtil;
 
 public class RequestHandler {
@@ -46,25 +41,6 @@ public class RequestHandler {
             }
         }
         return null;
-    }
-
-    public static void runJob(String institution) {
-        JSONObject props = ConfigurationHandler.getInstance().getConfiguration();
-        String institutionApiKey = null;
-        String requestsJobId = null;
-        String baseUrl = props.get("gateway").toString();
-        for (int i = 0; i < props.getJSONArray("institutions").length(); i++) {
-            JSONObject inst = props.getJSONArray("institutions").getJSONObject(i);
-            if (inst.get("code").toString().equals(institution)) {
-                institutionApiKey = inst.getString("apikey");
-                requestsJobId = inst.getString("requests_job_id");
-                break;
-            }
-        }
-        HttpResponse jobResponce = JobApi.runJob(requestsJobId, "run", baseUrl, institutionApiKey, "<job/>");
-        if (jobResponce.getResponseCode() == HttpsURLConnection.HTTP_BAD_REQUEST) {
-            logger.warn("Can't run job institution : " + institution + ". Job Id : " + requestsJobId);
-        }
     }
 
 }
