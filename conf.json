@@ -3,21 +3,21 @@
 	"remote_storage_inst": "01AAA_RS",
 	"remote_storage_apikey": "l8xx...",
 	"ftp_server": {
-					"host": "ftp.server",
+					"host": "my.ftp.server",
 					"user": "user",
 					"password": "xxx",
-					"main_folder":"main_rs"
+					"main_folder":"the_main_folder"
 				},
 	"remote_storage_holding_library":"RS",
-	"remote_storage_holding_location":"rs_sherd",
+	"remote_storage_holding_location":"rs_shared",
 	"institutions": [
 		{
 			"code": "01AAA_RS",
-			"apikey": "l8x...",
+			"apikey": "l7xx...",
 			"libraries": [
 				{
 					"code": "RS",
-					"remote_storage_location": ["AAA RS","rs_sherd"]
+					"remote_storage_location": ["rs_shared"]
 				}
 			]
 		},
@@ -30,7 +30,7 @@
 				{
 					"code": "ABRS",
 					"circ_desc": "DEFAULT_CIRC_DESK",
-					"remote_storage_location": ["rs_sherd"]
+					"remote_storage_location": ["rs_shared_in_ab"]
 				}
 			]
 		},
@@ -43,7 +43,7 @@
 				{
 					"code": "CDRS",
 					"circ_desc": "DEFAULT_CIRC_DESK",
-					"remote_storage_location": ["AAA RS","AAA CAT","rs_sherd"]
+					"remote_storage_location": ["rs_shared_1","rs_shared_2","rs_shared_3"]
 				}
 			]
 		}
