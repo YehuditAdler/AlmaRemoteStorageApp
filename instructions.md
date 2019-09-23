@@ -1,7 +1,8 @@
 # Instructions
 ## Prerequisites
-FTP server - with sub-directories for each institution
-Access to the Developer network for all member institutions
+FTP server - with sub-directories for each institution.
+
+Access to the Developer network for all member institutions.
 
 ### On all Institutions:
 1. FTP connection configuration - To share files between the App and Alma with a  [sub-directory](https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/050Administration/050Configuring_General_Alma_Functions/050External_Systems#UpdateSubmissionFormatFtp) for each institutions (the dir name should include the inst code. e.g. main_folder/01AAA_ABC).
