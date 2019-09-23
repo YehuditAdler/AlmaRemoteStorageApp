@@ -10,6 +10,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AlmaRestUtil {
@@ -44,7 +45,7 @@ public class AlmaRestUtil {
 
             BufferedReader in = null;
             if (con.getErrorStream() != null) {
-                logger.error("reading con.getErrorStream()...");
+                // logger.error("reading con.getErrorStream()...");
                 in = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             } else {
                 in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -60,9 +61,19 @@ public class AlmaRestUtil {
             String out = response.toString().trim();
 
             // Log output of PUT only on error. Always log output of GET.
-            if (!(method == "PUT" && con.getResponseCode() == HttpsURLConnection.HTTP_OK)) {
+            if (con.getResponseCode() >= HttpsURLConnection.HTTP_OK
+                    && con.getResponseCode() <= HttpsURLConnection.HTTP_MULT_CHOICE && method != "PUT") {
                 logger.info("output: " + out);
+            } else {
+                try {
+                    JSONObject jsonErrror = new JSONObject(out);
+                    logger.info("message: " + jsonErrror.getJSONObject("errorList").getJSONArray("error")
+                            .getJSONObject(0).getString("errorMessage"));
+                }catch (JSONException e) {
+                    logger.info("message: " + out);
+                }
             }
+
             con.disconnect();
 
             HttpResponse responseObj = new HttpResponse(out, con.getHeaderFields(), con.getResponseCode());

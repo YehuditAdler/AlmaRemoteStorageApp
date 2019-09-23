@@ -11,6 +11,7 @@ import org.marc4j.marc.DataField;
 import org.marc4j.marc.Record;
 import org.marc4j.marc.VariableField;
 
+import com.exlibris.configuration.ConfigurationHandler;
 import com.exlibris.items.ItemData;
 import com.exlibris.restapis.BibApi;
 import com.exlibris.restapis.HoldingApi;
@@ -142,7 +143,7 @@ public class SCFUtil {
         String remoteStorageApikey = props.get("remote_storage_apikey").toString();
         String baseUrl = props.get("gateway").toString();
         String holdingLib = props.get("remote_storage_holding_library").toString();
-        String holdingLoc = props.get("remote_storage_holding_library").toString();
+        String holdingLoc = props.get("remote_storage_holding_location").toString();
         String holdingBody = HOL_XML_TEMPLATE.replace("_LIB_CODE_", holdingLib).replace("_LOC_CODE_", holdingLoc);
         HttpResponse holdingResponse = HoldingApi.createHolding(mmsId, holdingBody, baseUrl, remoteStorageApikey);
         JSONObject jsonHoldingObject = new JSONObject(holdingResponse.getBody());
@@ -204,13 +205,13 @@ public class SCFUtil {
 
     public static boolean deleteSCFItem(JSONObject jsonItemObject) {
         logger.debug("delete SCF Item. Barcode: "
-                + jsonItemObject.getJSONObject("item").getJSONObject("item_data").getString("barcode"));
+                + jsonItemObject.getJSONObject("item_data").getString("barcode"));
         JSONObject props = ConfigurationHandler.getInstance().getConfiguration();
         String remoteStorageApikey = props.get("remote_storage_apikey").toString();
         String baseUrl = props.get("gateway").toString();
-        String mmsId = jsonItemObject.getJSONObject("item").getJSONObject("bib_data").getString("mms_id");
-        String holdingId = jsonItemObject.getJSONObject("item").getJSONObject("holding_data").getString("holding_id");
-        String itemPid = jsonItemObject.getJSONObject("item").getJSONObject("item_data").getString("pid");
+        String mmsId = jsonItemObject.getJSONObject("bib_data").getString("mms_id");
+        String holdingId = jsonItemObject.getJSONObject("holding_data").getString("holding_id");
+        String itemPid = jsonItemObject.getJSONObject("item_data").getString("pid");
         HttpResponse itemResponse = ItemApi.deleteItem(mmsId, holdingId, itemPid, null, null, baseUrl,
                 remoteStorageApikey);
         if (itemResponse.getResponseCode() == HttpsURLConnection.HTTP_BAD_REQUEST) {

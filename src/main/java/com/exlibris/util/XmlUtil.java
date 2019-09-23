@@ -39,7 +39,6 @@ public class XmlUtil {
         while (marcReader.hasNext()) {
             Record marc4jRecord = marcReader.next();
             records.add(marc4jRecord);
-            System.out.println(marc4jRecord.getControlNumber());
         }
         return records;
     }
@@ -52,7 +51,6 @@ public class XmlUtil {
         while (marcReader.hasNext()) {
             Record marc4jRecord = marcReader.next();
             records.add(marc4jRecord);
-            System.out.println(marc4jRecord.getControlNumber());
         }
         return records;
     }

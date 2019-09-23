@@ -15,6 +15,8 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
+import com.exlibris.configuration.ConfigurationHandler;
+
 public class FTPUtil {
 
     final static Logger logger = Logger.getLogger(FTPUtil.class);

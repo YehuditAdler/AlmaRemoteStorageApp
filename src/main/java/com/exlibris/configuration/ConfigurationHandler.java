@@ -1,4 +1,4 @@
-package com.exlibris.util;
+package com.exlibris.configuration;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -47,6 +47,10 @@ public class ConfigurationHandler {
 
     public JSONObject getConfiguration() {
         return this.props;
+    }
+
+    public static synchronized void updateInstance() {
+        instance = new ConfigurationHandler();
     }
 
 }
