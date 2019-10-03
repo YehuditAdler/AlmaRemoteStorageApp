@@ -1,5 +1,5 @@
 # Backup Only
-please use the updted [one](https://github.com/ExLibrisGroup/AlmaRemoteStorageApp) 
+please use the updted [repository](https://github.com/ExLibrisGroup/AlmaRemoteStorageApp) 
 
 # AlmaRemoteStorageApp
 Synchronize between network institutions and remote storage institution with Java code 
